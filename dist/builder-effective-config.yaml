@@ -1,0 +1,13 @@
+directories:
+  output: dist
+  buildResources: build
+appId: com.ecudox
+asarUnpack: DotNet/EcuDoxAPI
+linux:
+  target:
+    target: deb
+    arch:
+      - armv7l
+win:
+  target: portable
+electronVersion: 6.0.12

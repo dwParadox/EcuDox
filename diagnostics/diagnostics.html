@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>    
+    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/scrollable.css">
+    <link rel="stylesheet" href="../css/menu-options.css">
+    <link rel="stylesheet" href="../font/font.css">
+    <title>EcuDoxGUI</title>
+
+    <style>
+      @font-face {
+          font-family: 'Electrolize';
+          font-style: normal;
+          font-weight: 400;
+          src: local('Electrolize'), local('Electrolize-Regular'), url(font.woff2) format('woff2');
+          unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+        }
+    </style>
+</head>
+    <body>
+        <p id="loader-text-id" class="loader-text"></p>
+        <div id="loader-id" class="loader"></div>
+
+        <div id="content-id" class="content-all">
+            <div class="tab">
+                <button class="tablinks" onclick="location.href='../index.html';">Main Menu</button>
+            </div>
+
+            <div id="scrollbox" class="ScrollStyle">
+                <div class="menu-header">
+                    Diagnostics
+                </div>
+                
+                <div class="menu-option-group" id="available-maps">
+                </div>
+            </div>
+        </div>
+
+        <script>require('./diagnostics-renderer.js')</script>
+        <script>require('../global.js')</script>
+    </body>
+</html>

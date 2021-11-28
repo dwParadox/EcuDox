@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>    
+    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/sliders.css">
+    <link rel="stylesheet" href="../css/scrollable.css">
+    <link rel="stylesheet" href="../font/font.css">
+    <title>EcuDoxGUI</title>
+
+    <style>
+      @font-face {
+          font-family: 'Electrolize';
+          font-style: normal;
+          font-weight: 400;
+          src: local('Electrolize'), local('Electrolize-Regular'), url(font.woff2) format('woff2');
+          unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+        }
+    </style>
+</head>
+    <body>  
+        <p id="loader-text-id" class="loader-text"></p>
+        <div id="loader-id" class="loader"></div>
+        
+        <div id="content-id" class="content-all">
+            <div class="tab">
+                <button id='tab-overview' class="tablinks" onclick="openTab(event, 'Overview')">Overview</button>
+                <button id='tab-fuel' class="tablinks" onclick="openTab(event, 'Fuel')">Fuel</button>
+                <button id='tab-drive' class="tablinks" onclick="openTab(event, 'Drive')">Drive</button>
+                <button id='tab-power' class="tablinks" onclick="openTab(event, 'Power')">Power</button>
+                <button id='tab-settings' class="tablinks" onclick="openTab(event, 'Settings')">Settings</button>
+                <button class="tablinks" onclick="location.href='../index.html';">Main Menu</button>
+            </div>
+            
+            <!-- Tab content -->
+            <div id="Overview" class="tabcontent">
+                <figure class="highcharts-figure">
+                    <canvas id="canvas" width=400 height=375 style="position: absolute;padding-left:10px"></canvas>
+
+                    <div class="row-right row-upper">
+                        <div id="o-container-afr" class="gauge-container"></div>
+                        <div id="o-container-boost" class="gauge-container"></div>
+                    </div>
+
+                    <div class="row-right row-lower">
+                        <div id="o-container-oil" class="gauge-container"></div>
+                        <div id="o-container-coolant" class="gauge-container"></div>
+                    </div>
+
+                    <!--div class="row-upper">
+                        <div id="o-container-speed" class="gauge-container"></div>
+                        <div id="o-container-rpm" class="gauge-container"></div>
+                    </div-->
+
+                    <!--div class="row-lower"> 
+                        <div id="o-container-pwr-percent" class="gauge-container"></div>
+                        <div id="o-container-tq-percent" class="gauge-container"></div>
+
+                    </div-->
+                </figure>
+            </div>
+            
+            <div id="Fuel" class="tabcontent">
+                <figure class="highcharts-figure">
+                    <div class="row-upper">
+                        <div id="f-container-afr" class="gauge-container"></div>
+                        <div id="f-container-stft" class="gauge-container"></div>
+                        <div id="f-container-ltft" class="gauge-container"></div>
+                        <div id="f-container-fuelpressure" class="gauge-container"></div>
+                    </div>
+
+                    <div class="row-lower"> 
+                        <div id="f-container-maf" class="gauge-container"></div>
+                        <div id="f-container-piratio" class="gauge-container"></div>
+                        <div id="f-container-igntiming" class="gauge-container"></div>
+                        <div id="f-container-knock" class="gauge-container"></div>
+                    </div>       
+                </figure>
+            </div>
+
+            <div id="Drive" class="tabcontent">
+                <figure class="highcharts-figure">
+                    <div class="row-upper">
+                        <div id="d-container-accangle" class="gauge-container"></div>
+                        <div id="d-container-brake" class="gauge-container"></div>
+                        <div id="d-container-vvtenabled" class="gauge-container"></div>
+                        <div id="d-container-wheelslip" class="gauge-container"></div>
+                    </div>
+
+                    <div class="row-lower"> 
+                        <div id="d-container-engload" class="gauge-container"></div>
+                        <div id="d-container-ditospark" class="gauge-container"></div>
+                        <div id="d-container-frontspeed" class="gauge-container"></div>
+                        <div id="d-container-rearspeed" class="gauge-container"></div>
+                    </div>  
+                </figure>
+            </div>
+            
+            <div id="Power" class="tabcontent">
+                <figure class="highcharts-figure">
+                    <div class="row-upper-graph">
+                        <div id="p-container-hp" class="graph-container"></div>
+                    </div>
+
+                    <div class="row-lower"> 
+                        <div id="p-container-peakpower" class="gauge-container"></div>
+                        <div id="p-container-peakboost" class="gauge-container"></div>
+                        <div id="p-container-curpower" class="gauge-container"></div>
+                        <div id="p-container-boost" class="gauge-container"></div>
+                    </div>
+                </figure>
+            </div>
+
+            <div id="FlexFuel" class="tabcontent">
+                <figure class="highcharts-figure">
+                    <div class="row-upper">
+                        <div id="ff-container-content" class="gauge-container"></div>
+                        <div id="ff-container-contentraw" class="gauge-container"></div>
+                        <div id="ff-container-ignadvance" class="gauge-container"></div>
+                        <div id="ff-container-quantitymult" class="gauge-container"></div>
+                    </div>
+
+                    <div class="row-lower"> 
+                        <div id="ff-container-afradjust" class="gauge-container"></div>
+                        <div id="ff-container-crankmult" class="gauge-container"></div>
+                        <div id="ff-container-pressure" class="gauge-container"></div>
+                        <div id="ff-container-mapswitch" class="gauge-container"></div>
+                    </div>  
+                </figure>
+            </div>
+
+            <div id="Settings" class="tabcontent">
+                <p class="label">Traction Control Strength</p>
+                <p class="label-data"id="traction-strength-lbl">12%</p>
+                <input type="range" min="0" max="100" value="12" class="slider" id="traction-strength">
+                
+                <p class="label">Launch Control RPM</p>
+                <p class="label-data"id="launch-rpm-lbl">2500RPM</p>
+                <input type="range" min="1500" max="4500" value="2500" class="slider" id="launch-rpm">
+                
+                <p class="label">Flame Intensity</p>
+                <p class="label-data"id="fuel-economy-lbl">1%</p>
+                <input type="range" min="0" max="100" value="1" class="slider" id="fuel-economy">
+
+                <p class="label">Throttle Sensitivity</p>
+                <p class="label-data"id="throttle-sens-lbl">25%</p>
+                <input type="range" min="0" max="100" value="25" class="slider" id="throttle-sens">
+
+                <p class="label">SparkCut Ign. Retard</p>
+                <p class="label-data"id="ign-retard-lbl">25%</p>
+                <input type="range" min="0" max="100" value="25" class="slider" id="ign-retard">
+
+            </div>
+
+            <div class="seperator"></div>
+
+            <div id="traction-warning">
+                <div id="traction-notif-left" class="notification-bar left transparent"></div>
+                <div id="traction-notif-right" class="notification-bar right transparent"></div>    
+            </div>
+            
+            <div id="boost-container" class="progress-container-boost">
+                <div id="boost-bar" class="progress-bar-boost glow"></div>
+            </div>
+
+            <div id="rpm-bar-container" class="progress-container">
+                <div id="rpm-bar" class="progress-bar glow"></div>
+            </div>
+        </div>
+        <script src="../js/tab-manager.js"></script>
+        <script src="../js/sliders.js"></script>
+        <script src="../js/teslahud.js"></script>
+
+        <script>require('./main-renderer.js')</script>
+        <script>require('../global.js')</script>
+    </body>
+</html>

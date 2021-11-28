@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>    
+    <link rel="stylesheet" href="./css/index.css">
+    <link rel="stylesheet" href="./css/scrollable.css">
+    <link rel="stylesheet" href="./css/menu-options.css">
+    <link rel="stylesheet" href="./font/font.css">
+    <title>EcuDoxGUI</title>
+
+    <style>
+      @font-face {
+          font-family: 'Electrolize';
+          font-style: normal;
+          font-weight: 400;
+          src: local('Electrolize'), local('Electrolize-Regular'), url(font.woff2) format('woff2');
+          unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+        }
+    </style>
+</head>
+    <body>
+        <div id="splashscreen-id" class="splashscreen">
+            <img src="./img/my_splash.png" />
+        </div>
+    
+        <p id="loader-text-id" class="loader-text"></p>
+        <div id="loader-id" class="loader"></div>
+
+        <div id="content-id" class="content-all">
+            <div class="ScrollStyle">
+                <div class="menu-header">
+                    AG6 INTERFACE
+                </div>
+                <div class="menu-option-group">
+                    <div class="menu-upper">
+                        <div class="menu-option menu-glow" onclick="location.href='./dashboard/main.html';">
+                            <img class="menu-item-logo" src="./img/dashboard.png" />
+                            <p class="menu-item-text">Dashboard</p>
+                        </div>
+
+                        <div class="menu-option menu-glow" onclick="location.href='./map-switching/map-switching.html';">
+                            <img class="menu-item-logo" src="./img/map_switching.png" />
+                            <p class="menu-item-text">Map Switching</p>
+                        </div>
+                    </div>
+
+                    <div class="menu-lower">
+                        <div class="menu-option menu-glow" onclick="location.href='./data-logging/data-logging.html';">
+                            <img class="menu-item-logo" src="./img/data_logging.png" />
+                            <p class="menu-item-text">Data Logging</p>
+                        </div>
+
+                        <div class="menu-option menu-glow" onclick="location.href='./diagnostics/diagnostics.html';">
+                            <img class="menu-item-logo" src="./img/diagnostics.png" />
+                            <p class="menu-item-text">Diagnostics</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-option-group">
+                    <div class="menu-upper">
+                        <div class="menu-option menu-glow" onclick="location.href='./tuning/tuning.html';">
+                            <img class="menu-item-logo" src="./img/tuning.png" />
+                            <p class="menu-item-text">Tuning</p>
+                        </div>
+
+                        <div class="menu-option menu-glow" onclick="location.href='./settings/settings.html';">
+                            <img class="menu-item-logo" src="./img/crow_nobg.png" />
+                            <p class="menu-item-text">AG6 Settings</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>require('./index-renderer.js')</script>
+        <script>require('./global.js')</script>
+    </body>
+</html>

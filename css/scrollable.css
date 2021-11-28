@@ -1,0 +1,13 @@
+.ScrollStyle
+{
+    max-height: 480px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    margin-left: 10px;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+    display: none;
+}

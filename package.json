@@ -1,0 +1,41 @@
+{
+  "name": "ecudox",
+  "productName": "EcuDox",
+  "version": "0.0.4",
+  "description": "A custom user interface for EcuTek's EVI.",
+  "main": "main.js",
+  "homepage": "paradoxsprx.net",
+  "scripts": {
+    "start": "electron .",
+    "build-windows": "electron-builder",
+    "build-linux": "electron-builder --linux"
+  },
+  "keywords": [],
+  "author": "Korbin Ellis <korbin.ellis99@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "canvas-gauges": "^2.1.7",
+    "electron-cgi": "0.0.5",
+    "highcharts": "^8.0.0",
+    "v8-compile-cache": "^2.1.0"
+  },
+  "devDependencies": {
+    "electron": "^6.0.12",
+    "electron-builder": "^22.3.2"
+  },
+  "build": {
+    "appId": "com.ecudox",
+    "asarUnpack": "DotNet/EcuDoxAPI",
+    "linux": {
+      "target": {
+        "target": "deb",
+        "arch": [
+          "armv7l"
+        ]
+      }
+    },
+    "win": {
+      "target": "portable"
+    }
+  }
+}

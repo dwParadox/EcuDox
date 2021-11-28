@@ -1,0 +1,116 @@
+.menu-header {
+    float:left;
+    min-height: 100px;
+    max-height: 100px;
+    min-width: 800px;
+    max-width: 800px;
+
+    font-size:40px;
+    text-align: center;
+    line-height: 100px;
+}
+
+.menu-option-group {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    height: 100%;
+}
+
+.menu-upper {
+    position: relative;
+}
+
+.menu-lower {
+    position: relative;
+}
+
+.menu-option {
+    float: left;
+
+    background: #080808;
+
+    border-style: solid;
+    border-radius: 10px;
+    border-width: 2px;
+    border-color: #a50000;
+
+    margin-left: 0px;
+    margin-right: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+
+    text-align: center;
+    line-break: 0px;
+    line-height: 80px;
+
+    min-height: 200px;
+    max-height: 200px;
+
+    min-width: 380px;
+    max-width: 380px;
+}
+
+
+.long-menu-option {
+    float: left;
+
+    background: #080808;
+
+    border-style: solid;
+    border-radius: 5px;
+    border-width: 2px;
+    border-color: #101010;
+
+    margin-left: 0px;
+    margin-right: 10px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+
+    text-align: center;
+
+    line-height: 60px;
+    height: 60px;
+    width: 780px;
+}
+
+.menu-item-logo {
+    width: 100px;
+    height: 100px;
+
+    top: 30px;
+    position: relative;
+}
+
+.long-item-text {
+    bottom: 30px;
+    position: relative;
+    font-size: 30px;
+}
+
+.menu-item-text {
+    bottom: 60px;
+    position: relative;
+    font-size: 38px;
+}
+
+.menu-glow {
+    box-shadow: 0 4px 4px rgba(150, 0, 0, 0.5) inset,
+                0 -4px 4px rgba(150, 0, 0, .5) inset;
+
+    animation: animate-menu-glow .7s ease-out infinite;
+}
+
+@keyframes animate-menu-glow {
+    0% {
+        box-shadow: 0 4px 4px rgba(150, 0, 0, .7) inset,
+                    0 -4px 4px rgba(150, 0, 0, .7) inset;
+    }
+    50% {
+        box-shadow: 0 4px 4px rgba(150, 0, 0, .3) inset,
+                    0 -4px 4px rgba(150, 0, 0, .3) inset;
+    }
+    100% {
+        box-shadow: 0 4px 4px rgba(150, 0, 0, .7) inset,
+                    0 -4px 4px rgba(150, 0, 0, .7) inset;
+    }
+}

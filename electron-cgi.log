@@ -1,0 +1,20 @@
+2020-02-25 20:20:53.855 -05:00 [ERR] 
+ElectronCgi.DotNet.NoRequestHandlerFoundException: No request handler found for request type: division
+   at ElectronCgi.DotNet.RequestExecutedChannelMessage.Send(IChannel channel)
+   at ElectronCgi.DotNet.MessageDispatcher.<>c__DisplayClass3_0.<<StartAsync>b__0>d.MoveNext()
+2020-02-25 21:00:44.637 -05:00 [ERR] 
+ElectronCgi.DotNet.NoRequestHandlerFoundException: No request handler found for request type: division
+   at ElectronCgi.DotNet.RequestExecutedChannelMessage.Send(IChannel channel)
+   at ElectronCgi.DotNet.MessageDispatcher.<>c__DisplayClass3_0.<<StartAsync>b__0>d.MoveNext()
+2020-02-25 21:00:51.614 -05:00 [ERR] 
+ElectronCgi.DotNet.NoRequestHandlerFoundException: No request handler found for request type: division
+   at ElectronCgi.DotNet.RequestExecutedChannelMessage.Send(IChannel channel)
+   at ElectronCgi.DotNet.MessageDispatcher.<>c__DisplayClass3_0.<<StartAsync>b__0>d.MoveNext()
+2020-02-26 17:42:21.780 -05:00 [ERR] 
+ElectronCgi.DotNet.NoRequestHandlerFoundException: No request handler found for request type: greeting
+   at ElectronCgi.DotNet.RequestExecutedChannelMessage.Send(IChannel channel)
+   at ElectronCgi.DotNet.MessageDispatcher.<>c__DisplayClass3_0.<<StartAsync>b__0>d.MoveNext()
+2020-02-26 17:42:46.433 -05:00 [ERR] 
+ElectronCgi.DotNet.NoRequestHandlerFoundException: No request handler found for request type: greeting
+   at ElectronCgi.DotNet.RequestExecutedChannelMessage.Send(IChannel channel)
+   at ElectronCgi.DotNet.MessageDispatcher.<>c__DisplayClass3_0.<<StartAsync>b__0>d.MoveNext()
