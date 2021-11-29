@@ -190,6 +190,7 @@ namespace EcuDox.EcuTek
 
         private uint GetBigInitNumber(uint aqe)
         {
+            // [FAULT POINT]
             return (uint)BigInteger.ModPow(aqe, 105958177U, 240070843U);
         }
 

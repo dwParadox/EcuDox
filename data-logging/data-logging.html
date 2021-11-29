@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="../css/scrollable.css">
     <link rel="stylesheet" href="../css/menu-options.css">
     <link rel="stylesheet" href="../font/font.css">
-    <title>EcuDoxGUI</title>
+    <title>DataLogging</title>
 
     <style>
       @font-face {
@@ -31,12 +31,13 @@
                     Data Logging
                 </div>
                 
-                <div class="menu-option-group" id="available-maps">
+                <div class="menu-option-group" id="available-logs">
                 </div>
             </div>
         </div>
-
-        <script>require('./data-logging-renderer.js')</script>
+        
+        <script>let _connection = null;</script>
+        <script>require('./data-logging-controller.js')</script>
         <script>require('../global.js')</script>
     </body>
 </html>

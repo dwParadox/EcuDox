@@ -1,6 +1,5 @@
 ﻿using ElectronCgi.DotNet;
 using System;
-using System.Collections.Generic;
 using System.IO.Ports;
 using System.Linq;
 using System.Text;
@@ -10,10 +9,14 @@ using Newtonsoft.Json;
 
 namespace EcuDox
 {
+
     public static class EcuDoxMain
     {
         public static SerialPortProcessor Port { get; private set; } = null;
         public static EcuDoxAPI API { get; private set; } = null;
+        public static MapSwitching Maps { get; private set; } = null;
+        public static DataLogging Logging { get; private set; } = null;
+
         private static double ConvertToFahrenheit(double celsius) => (celsius * 9 / 5) + 32;
 
         private static Connection _js = null;
@@ -43,6 +46,9 @@ namespace EcuDox
 
                 API = ecuDox;
                 */
+
+                Maps = new MapSwitching();
+                Logging = new DataLogging();
             }
             catch (Exception e)
             {
@@ -108,14 +114,20 @@ namespace EcuDox
                 new EcuDoxException(_js, "EcuDox setup was unsuccessful");
             else
             {
-                List<AvailableMap> maps = new List<AvailableMap>();
-                maps.Add(new AvailableMap("map-standard", "Standard", false));
-                maps.Add(new AvailableMap("map-sport", "Sport", false));
-                maps.Add(new AvailableMap("map-sportplus", "Sport+", true));
-                maps.Add(new AvailableMap("map-track", "Track", false));
-                maps.Add(new AvailableMap("map-flame", "Flame", false));
+                _js.On<string>("GetMaps", f =>
+                {
+                    _js.Send("MapsAvailable", JsonConvert.SerializeObject(Maps.GetMaps()));
+                });
 
-                _js.Send("MapsAvailable", JsonConvert.SerializeObject(maps));
+                _js.On<string>("MapChange", map =>
+                {
+                    Maps.SetMapActive(map);
+                });
+
+                _js.On("GetLogs", () =>
+                {
+                    _js.Send("LogsAvailable", JsonConvert.SerializeObject(Logging.GetLogs()));
+                });
 
                 while (true)
                 {

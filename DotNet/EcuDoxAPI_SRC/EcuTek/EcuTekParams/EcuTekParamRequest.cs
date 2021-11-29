@@ -45,16 +45,16 @@ namespace EcuDox.EcuTek
                     {
                         are = ECMHelper.DecodeUIntResult(obdResp.Data, Endian.Big, num7);
 
-                        if (Directory.Exists("/home/ag6ny/RaceROM/Cache"))
+                        if (Directory.Exists("./RaceROM/Cache"))
                         {
                             uint fileId = ECMHelper.DecodeUIntResult(obdResp.Data, Endian.Big, num9);
-                            cacheFileName = "/home/ag6ny/RaceROM/Cache/RRData-" + fileId + ".bin";
+                            cacheFileName = "./RaceROM/Cache/RRData-" + fileId + ".bin";
 
                             if (File.Exists(cacheFileName))
                                 return DecodeReceivedFile(File.ReadAllBytes(cacheFileName), are);
                         }
                         else
-                            Directory.CreateDirectory("/home/ag6ny/RaceROM/Cache");
+                            Directory.CreateDirectory("./RaceROM/Cache");
                     }
 
                     memoryStream.Write(obdResp.Data, num9, count);

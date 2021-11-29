@@ -31,12 +31,28 @@
                     Tuning
                 </div>
                 
-                <div class="menu-option-group" id="available-maps">
+                <div class="menu-option-group">
+                    <div class="menu-upper">
+                        <div class="menu-option menu-glow" onclick="location.href='./tuning-read/tuning-read-index.html';">
+                            <img class="menu-item-logo" src="../img/arrow-download.png" />
+                            <p class="menu-item-text">Read</p>
+                        </div>
+
+                        <div class="menu-option menu-glow" onclick="location.href='./tuning-write/tuning-write-index.html';">
+                            <img class="menu-item-logo" src="../img/arrow-upload.png" />
+                            <p class="menu-item-text">Write</p>
+                        </div>
+                    </div>
+
+                    <div class="menu-lower" id="existing-map-base">
+                        
+                    </div>
                 </div>
             </div>
         </div>
 
-        <script>require('./tuning-renderer.js')</script>
+        <script>let _connection = null;</script>
+        <script>require('./tuning-controller.js')</script>
         <script>require('../global.js')</script>
     </body>
 </html>

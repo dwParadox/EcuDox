@@ -1,6 +1,6 @@
 ﻿namespace EcuDox
 {
-    public struct AvailableMap
+    public class AvailableMap
     {
         public AvailableMap(string name, string displayName, bool active)
         {

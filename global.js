@@ -1,8 +1,6 @@
 const { session } = require('electron');
 const { ConnectionBuilder } = require('electron-cgi');
 
-let _connection = null;
-
 function setupConnectionToRestartOnConnectionLost() {
     // /opt/EcuDox/resources/app.asar.unpacked/
     _connection = new ConnectionBuilder().connectTo(
@@ -19,8 +17,6 @@ function setupConnectionToRestartOnConnectionLost() {
 
         document.getElementById('content-id').style.display = "none";
 
-        sessionStorage.setItem("apiConnection") = null;
-
         setupConnectionToRestartOnConnectionLost();
     };
 
@@ -33,6 +29,14 @@ function setupConnectionToRestartOnConnectionLost() {
     });
 
     _connection.on('InitEnded', data => {
+        if (typeof window.AddMap === 'function') {
+            _connection.send("GetMaps", "f", f => {});
+        }
+
+        if (typeof window.AddLog === 'function') {
+            _connection.send("GetLogs", "f", f => {});
+        }
+
         document.getElementById('loader-id').style.display = "none";
         document.getElementById('loader-text-id').style.display = "none";
         document.getElementById('content-id').style.display = "block";
@@ -56,7 +60,18 @@ function setupConnectionToRestartOnConnectionLost() {
                 var map = maps[i];
                 AddMap(map["Name"], map["DisplayName"], map["Active"]);
             }
-        }        
+        }
+    });
+
+    _connection.on('LogsAvailable', data => {
+        if (typeof window.AddLog === 'function') {
+            var logs = JSON.parse(data);
+
+            for (var i = 0; i < logs.length; i++) {
+                var log = logs[i];
+                AddLog(log["Name"], log["DisplayName"])
+            }
+        }
     });
 }
 

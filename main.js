@@ -20,9 +20,9 @@ function createWindow () {
   //mainWindow.webContents.on('dom-ready', (event)=> {
   //  let css = '* { cursor: none !important; }';
   //  mainWindow.webContents.insertCSS(css);
-  //});
+  //);
 
-  mainWindow.webContents.openDevTools()
+  //mainWindow.webContents.openDevTools()
 
   mainWindow.on('closed', function () {
     mainWindow = null

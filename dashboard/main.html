@@ -27,7 +27,7 @@
                 <button id='tab-fuel' class="tablinks" onclick="openTab(event, 'Fuel')">Fuel</button>
                 <button id='tab-drive' class="tablinks" onclick="openTab(event, 'Drive')">Drive</button>
                 <button id='tab-power' class="tablinks" onclick="openTab(event, 'Power')">Power</button>
-                <button id='tab-settings' class="tablinks" onclick="openTab(event, 'Settings')">Settings</button>
+                <button id='tab-settings' class="tablinks" onclick="openTab(event, 'Settings')">Parameters</button>
                 <button class="tablinks" onclick="location.href='../index.html';">Main Menu</button>
             </div>
             
@@ -170,7 +170,8 @@
         <script src="../js/sliders.js"></script>
         <script src="../js/teslahud.js"></script>
 
-        <script>require('./main-renderer.js')</script>
+        <script>let _connection = null;</script>
+        <script>require('./main-controller.js')</script>
         <script>require('../global.js')</script>
     </body>
 </html>

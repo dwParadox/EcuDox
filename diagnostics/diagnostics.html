@@ -31,12 +31,14 @@
                     Diagnostics
                 </div>
                 
-                <div class="menu-option-group" id="available-maps">
+                <div class="menu-option-group" id="current-codes">
+                    <div id="scan-cel" class="long-menu-option menu-glow"><p class="long-item-text">Scan for DTCs</p></div>
                 </div>
             </div>
         </div>
 
-        <script>require('./diagnostics-renderer.js')</script>
+        <script>let _connection = null;</script>
+        <script>require('./diagnostics-controller.js')</script>
         <script>require('../global.js')</script>
     </body>
 </html>
