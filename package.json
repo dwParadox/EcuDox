@@ -1,7 +1,7 @@
 {
   "name": "ecudox",
   "productName": "EcuDox",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "A custom user interface for EcuTek's EVI.",
   "main": "main.js",
   "homepage": "paradoxsprx.net",
@@ -16,6 +16,7 @@
   "dependencies": {
     "canvas-gauges": "^2.1.7",
     "electron-cgi": "0.0.5",
+    "electron-virtual-keyboard": "^1.0.7",
     "highcharts": "^8.0.0",
     "v8-compile-cache": "^2.1.0"
   },

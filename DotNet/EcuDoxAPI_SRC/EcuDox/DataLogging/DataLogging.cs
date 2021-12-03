@@ -1,40 +1,102 @@
 ﻿using System;
 using System.Collections.Generic;
 
+using ElectronCgi.DotNet;
+
 using Newtonsoft.Json;
 using System.IO;
+using System.Linq;
 
 namespace EcuDox
 {
+
     public class DataLogging
     {
-        private List<DataLogEntry> Logs;
+        private Connection _js;
+        private LogHandler _handler;
 
-        public DataLogging()
+        public DataLogging(Connection con)
         {
-            Logs = new List<DataLogEntry>();
+            this._js = con;
+            this._handler = new LogHandler(this._js);
+
+            this._handler.RegisterQueueEvents();
         }
 
-        private void WriteLogs()
+        public void CreateNewLogFile(string id, string name)
         {
-            List<DataLogEntry> logs = new List<DataLogEntry>();
-            logs.Add(new DataLogEntry("log1", "Sport+ (11/28/21 5:00 PM)", "LOG 1"));
-            logs.Add(new DataLogEntry("log2", "Sport+ (11/28/21 4:00 PM)", "LOG 2"));
-            logs.Add(new DataLogEntry("log3", "Flame (11/28/21 3:00 PM)", "LOG 3"));
-            logs.Add(new DataLogEntry("log4", "Flame (11/28/21 2:00 PM)", "LOG 4"));
+            if (!File.Exists("./AG6_DATA/LogFiles.json"))
+                File.WriteAllText("./AG6_DATA/LogFiles.json", JsonConvert.SerializeObject(new List<DataLogEntry>() { new DataLogEntry(id, name, "PENDING") }));
+            else
+            {
+                var logFile = JsonConvert.DeserializeObject<List<DataLogEntry>>(File.ReadAllText("./AG6_DATA/LogFiles.json"));
+                logFile.Add(new DataLogEntry(id, name, "PENDING"));
 
-            File.WriteAllText("./RaceROM/Cache/LogFiles.json", JsonConvert.SerializeObject(logs));
+                File.WriteAllText("./AG6_DATA/LogFiles.json", JsonConvert.SerializeObject(logFile));
+            }
+
+            File.WriteAllText("./AG6_DATA/Logs/" + id + ".csv", "-");
         }
 
-        public List<DataLogEntry> GetLogs()
+        private List<DataLogEntry> ReadLogDirectory()
         {
-            if (!Directory.Exists("./RaceROM/Cache"))
-                Directory.CreateDirectory("./RaceROM/Cache");
+            var logList = new List<DataLogEntry>();
 
-            if (!File.Exists("./RaceROM/Cache/LogFiles.json"))
-                WriteLogs();
+            string[] logFiles = Directory.GetFiles("./AG6_DATA/Logs/", "*.csv");
 
-            return Logs = JsonConvert.DeserializeObject<List<DataLogEntry>>(File.ReadAllText("./RaceROM/Cache/LogFiles.json"));
+            foreach (string file in logFiles)
+            {
+                string logId = Path.GetFileNameWithoutExtension(file);
+                logList.Add(new DataLogEntry(logId, "", "STORED"));
+            }
+
+            return logList;
+        }
+
+        private string CreateLogBase()
+        {
+            var logs = ReadLogDirectory();
+
+            if (logs.Count <= 0)
+                return "";
+
+            logs.ForEach(x => _handler.QueueNameRequest(x));
+
+            return "";
+        }
+
+        private string UpdateLogBase()
+        {
+            string curFileLogs = File.ReadAllText("./AG6_DATA/LogFiles.json");
+
+            if (_handler.QueueEmpty)
+            {
+                var logFolder = ReadLogDirectory();
+                var logFile = JsonConvert.DeserializeObject<List<DataLogEntry>>(curFileLogs);
+
+                logFolder
+                    .Where(l => !logFile.Any(l2 => l2.Id == l.Id))
+                    .ToList()
+                    .ForEach(x => _handler.QueueNameRequest(x));
+            }
+
+            return curFileLogs;
+        }
+
+        public string GetLogsSerialized()
+        {
+            try
+            {
+                if (!File.Exists("./AG6_DATA/LogFiles.json"))
+                    return CreateLogBase();
+
+                return UpdateLogBase();
+            }
+            catch (Exception ex)
+            {
+                _js.Send("APIException", ex.Message);
+                return "";
+            }
         }
     }
 }

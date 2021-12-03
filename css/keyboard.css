@@ -1,0 +1,28 @@
+input {
+    width: 100%;
+    height: 15%;
+    
+    font-family: 'Electrolize';
+    font-style: normal;
+    font-size: 40px;
+
+    background: #222;
+    color: #CCC;
+
+    border: none;
+    outline: none;
+
+    padding:20px
+}
+  
+.keyboard-modal {
+    display: none;
+    
+    width: 100%;
+    height: 52%;
+    
+    bottom: 0px;
+
+    position: absolute;
+    z-index: 999;
+}

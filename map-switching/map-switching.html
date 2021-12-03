@@ -5,6 +5,16 @@
     <link rel="stylesheet" href="../css/scrollable.css">
     <link rel="stylesheet" href="../css/menu-options.css">
     <link rel="stylesheet" href="../font/font.css">
+
+    <link rel="stylesheet" href="../css/keyboard.css">
+
+    <script>
+        window.$ = window.jQuery = require('jquery');
+        require('electron-virtual-keyboard/client')(window, jQuery);
+    </script>
+
+    <link href="../node_modules/electron-virtual-keyboard/virtual-keyboard.css" type="text/css" rel="stylesheet"/>
+
     <title>MapSwitching</title>
 
     <style>
@@ -22,10 +32,15 @@
         <div id="loader-id" class="loader"></div>
 
         <div id="content-id" class="content-all">
+            <div id="osk" class="keyboard-modal">
+                <input id="keyboard-input" class="main-keyboard menu-glow" type="text"/>
+                <div id="keyboard-object" class="kb-container"></div>
+            </div>
+
             <div class="tab">
                 <button class="tablinks" onclick="location.href='../index.html';">Main Menu</button>
             </div>
-
+            
             <div id="scrollbox" class="ScrollStyle">
                 <div class="menu-header">
                     Available Maps

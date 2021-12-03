@@ -2,14 +2,14 @@
 {
     public class AvailableMap
     {
-        public AvailableMap(string name, string displayName, bool active)
+        public AvailableMap(string id, string displayName, bool active)
         {
-            this.Name = name;
+            this.Id = id;
             this.DisplayName = displayName;
             this.Active = active;
         }
 
-        public string Name;
+        public string Id;
         public string DisplayName;
         public bool Active;
     }

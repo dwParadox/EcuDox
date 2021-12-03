@@ -33,6 +33,10 @@ function InitMapController() {
 
 InitMapController();
 
+window.ResetMaps = function ResetMaps() {
+    availableMaps.innerHTML = "";
+}
+
 window.AddMap = function AddMap(mapid, mapname, active) {
     availableMaps.innerHTML += "<div id=\"" + mapid + "\" class=\"long-menu-option\" onclick=\"SetMapActive('" + mapid + "')\"><p class=\"long-item-text\">" + mapname + "</p></div>";
 

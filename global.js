@@ -1,6 +1,75 @@
 const { session } = require('electron');
 const { ConnectionBuilder } = require('electron-cgi');
 
+let osk_container = null;
+let osk = null;
+let inputNode = null;
+let oskFirstInit = false;
+
+function oskPrompt(responseName) {
+    if (oskFirstInit === false) {
+        inputNode = document.getElementById('keyboard-input');
+
+        osk_container = document.getElementById("osk");
+        osk_container.style.display = "block";
+
+        osk = $('.main-keyboard').keyboard({
+            theme: 'theme-black',
+            layout: 'us-en:mobile',
+            show: true,
+            displayOnFocus: false,
+            //autoPosition: false,
+            container: function($el) {
+                return $el.parent().find('.kb-container');
+            }
+        });
+
+        inputNode.addEventListener("keyup", ({key}) => {
+            if (key === "Enter") {
+                _connection.send(responseName, inputNode.value);
+
+                inputNode.value = "";
+                osk_container.style.display = "none";
+            }
+        });
+
+        oskFirstInit = true;
+    }
+    else {
+        osk_container.style.display = "block";
+    }
+
+    inputNode.focus();
+}
+
+function FillMaps(data) {
+    if (data === "")
+        return;
+
+    var maps = JSON.parse(data);
+
+    if (maps != null) {
+        for (var i = 0; i < maps.length; i++) {
+            var map = maps[i];
+            AddMap(map["Id"], map["DisplayName"], map["Active"]);
+        }
+    }
+}
+
+function FillLogs(data) {
+    if (data === "")
+        return;
+
+    var logs = JSON.parse(data);
+            
+    if (logs != null) {
+        for (var i = 0; i < logs.length; i++) {
+            var log = logs[i];
+            AddLog(log["Id"], log["DisplayName"]);
+        }
+    }
+}
+
 function setupConnectionToRestartOnConnectionLost() {
     // /opt/EcuDox/resources/app.asar.unpacked/
     _connection = new ConnectionBuilder().connectTo(
@@ -14,7 +83,7 @@ function setupConnectionToRestartOnConnectionLost() {
 
         document.getElementById('loader-id').style.display = "block";
         document.getElementById('loader-text-id').style.display = "block";
-
+ 
         document.getElementById('content-id').style.display = "none";
 
         setupConnectionToRestartOnConnectionLost();
@@ -29,17 +98,25 @@ function setupConnectionToRestartOnConnectionLost() {
     });
 
     _connection.on('InitEnded', data => {
-        if (typeof window.AddMap === 'function') {
-            _connection.send("GetMaps", "f", f => {});
-        }
-
-        if (typeof window.AddLog === 'function') {
-            _connection.send("GetLogs", "f", f => {});
-        }
-
         document.getElementById('loader-id').style.display = "none";
         document.getElementById('loader-text-id').style.display = "none";
         document.getElementById('content-id').style.display = "block";
+
+        if (typeof window.AddMap === 'function') {
+            _connection.send("GetMaps", "f", f => { FillMaps(f); });
+        }
+
+        if (typeof window.AddLog === 'function') {
+            _connection.send("GetLogs", "f", f => { FillLogs(f); });
+        }
+
+        if (typeof window.StartLogging === 'function') {
+            oskPrompt('ReturnNewLogFileName');
+        }
+    });
+
+    _connection.on('NewLogFileName', data => {
+        SetLogFileName(data);
     });
 
     _connection.on('VehicleDataReady', data => {
@@ -52,27 +129,29 @@ function setupConnectionToRestartOnConnectionLost() {
         alert(data);
     });
 
-    _connection.on('MapsAvailable', data => {
-        if (typeof window.AddMap === 'function') {
-            var maps = JSON.parse(data);
-
-            for (var i = 0; i < maps.length; i++) {
-                var map = maps[i];
-                AddMap(map["Name"], map["DisplayName"], map["Active"]);
-            }
-        }
+    _connection.on('LogFileNameRequest', logid => {
+        alert('Enter a name for LogFile: \"' + logid + '\"')
+        oskPrompt('LogFileNameResponse');
     });
 
-    _connection.on('LogsAvailable', data => {
-        if (typeof window.AddLog === 'function') {
-            var logs = JSON.parse(data);
-
-            for (var i = 0; i < logs.length; i++) {
-                var log = logs[i];
-                AddLog(log["Name"], log["DisplayName"])
-            }
-        }
+    _connection.on('MapFileNameRequest', mapid => {
+        alert('Enter a name for MapFile: \"' + mapid + '\"')
+        oskPrompt('MapFileNameResponse');
     });
+
+    _connection.on('LogsUpdated', empty => {
+        ResetLogs();
+        _connection.send("GetLogs", "f", f => {
+            FillLogs(f);
+        });
+    });
+
+    _connection.on('MapsUpdated', empty => {
+        ResetMaps();
+        _connection.send("GetMaps", "f", f => {
+            FillMaps(f);
+        });
+    })
 }
 
 function Init() {

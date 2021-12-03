@@ -3,48 +3,98 @@ using System.Collections.Generic;
 
 using Newtonsoft.Json;
 using System.IO;
+using ElectronCgi.DotNet;
+using System.Linq;
 
 namespace EcuDox
 {
     public class MapSwitching
     {
-        private List<AvailableMap> Maps;
+        private MapHandler _handler;
+        private Connection _js;
 
-        public MapSwitching()
+        public MapSwitching(Connection con)
         {
-            this.Maps = new List<AvailableMap>();
+            this._js = con;
+            this._handler = new MapHandler(this._js);
+
+            this._handler.RegisterQueueEvents();
         }
 
-        public void SetMapActive(string mapId)
-        {
-            foreach (var map in this.Maps)
-                map.Active = (map.Name.Equals(mapId)) ? true : false;
+        public AvailableMap GetActiveMap() =>
+            JsonConvert.DeserializeObject<List<AvailableMap>>
+                (File.ReadAllText("./AG6_DATA/StoredMaps.json")).Where(m => m.Active).FirstOrDefault();
 
-            File.WriteAllText("./RaceROM/Cache/StoredMaps.json", JsonConvert.SerializeObject(Maps));
+        public void SetActiveMap(string mapId)
+        {
+            var maps = JsonConvert.DeserializeObject<List<AvailableMap>>
+                (File.ReadAllText("./AG6_DATA/StoredMaps.json"));
+
+            foreach (var map in maps)
+                map.Active = (map.Id.Equals(mapId)) ? true : false;
+
+            File.WriteAllText("./AG6_DATA/StoredMaps.json", JsonConvert.SerializeObject(maps));
         }
 
-        private void WriteMaps()
+        private List<AvailableMap> ReadMapDirectory()
         {
-            List<AvailableMap> availableMaps = new List<AvailableMap>();
+            var mapList = new List<AvailableMap>();
 
-            availableMaps.Add(new AvailableMap("map-standard", "Standard", false));
-            availableMaps.Add(new AvailableMap("map-sport", "Sport", false));
-            availableMaps.Add(new AvailableMap("map-sportplus", "Sport+", true));
-            availableMaps.Add(new AvailableMap("map-track", "Track", false));
-            availableMaps.Add(new AvailableMap("map-flame", "Flame", false));
+            string[] mapFiles = Directory.GetFiles("./AG6_DATA/StoredMaps/", "*.bin");
 
-            File.WriteAllText("./RaceROM/Cache/StoredMaps.json", JsonConvert.SerializeObject(availableMaps));
+            foreach (string file in mapFiles)
+            {
+                string mapId = Path.GetFileNameWithoutExtension(file);
+                mapList.Add(new AvailableMap(mapId, "", false));
+            }
+
+            return mapList;
         }
 
-        public List<AvailableMap> GetMaps()
+        private string CreateMapBase()
         {
-            if (!Directory.Exists("./RaceROM/Cache"))
-                Directory.CreateDirectory("./RaceROM/Cache");
+            var maps = ReadMapDirectory();
 
-            if (!File.Exists("./RaceROM/Cache/StoredMaps.json"))
-                WriteMaps();
+            if (maps.Count <= 0)
+                return "";
 
-            return Maps = JsonConvert.DeserializeObject<List<AvailableMap>>(File.ReadAllText("./RaceROM/Cache/StoredMaps.json"));
+            maps.ForEach(x => _handler.QueueNameRequest(x));
+
+            return "";
+        }
+
+        private string UpdateMapBase()
+        {
+            string curFileMaps = File.ReadAllText("./AG6_DATA/StoredMaps.json");
+
+            if (_handler.QueueEmpty)
+            {
+                var mapFolder = ReadMapDirectory();
+                var mapFile = JsonConvert.DeserializeObject<List<AvailableMap>>(curFileMaps);
+
+                mapFolder
+                    .Where(m => !mapFile.Any(m2 => m2.Id == m.Id))
+                    .ToList()
+                    .ForEach(x => _handler.QueueNameRequest(x));
+            }
+
+            return curFileMaps;
+        }
+
+        public string GetMapsSerialized()
+        {
+            try
+            {
+                if (!File.Exists("./AG6_DATA/StoredMaps.json"))
+                    return CreateMapBase();
+
+                return UpdateMapBase();
+            }
+            catch (Exception ex)
+            {
+                _js.Send("APIException", ex.Message);
+                return "";
+            }
         }
     }
 }

@@ -10,11 +10,15 @@ namespace EcuDoxAPI
 
         static void Main(string[] args)
         {
+            AG6INIT AG6 = new AG6INIT();
+            if (!AG6.Init())
+                return;
+
             JsConnection = new ConnectionBuilder()
                 .WithLogging()
                 .Build();
 
-            Thread serialThread = new Thread(EcuDoxMain.SerialThread);
+            Thread serialThread = new Thread(AG6Main.SerialThread);
             serialThread.IsBackground = true;
             serialThread.Start(JsConnection);
 

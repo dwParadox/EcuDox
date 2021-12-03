@@ -2,14 +2,14 @@
 {
     public class DataLogEntry
     {
-        public DataLogEntry(string name, string displayName, string logData)
+        public DataLogEntry(string id, string name, string logData)
         {
-            this.Name = name;
-            this.DisplayName = displayName;
+            this.Id = id;
+            this.DisplayName = name;
             this.LogData = logData;
         }
 
-        public string Name;
+        public string Id;
         public string DisplayName;
         public string LogData;
     }

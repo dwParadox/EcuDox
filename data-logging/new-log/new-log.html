@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>    
+    <link rel="stylesheet" href="../../css/index.css">
+    <link rel="stylesheet" href="../../css/scrollable.css">
+    <link rel="stylesheet" href="../../css/menu-options.css">
+    <link rel="stylesheet" href="../../font/font.css">
+    
+    <link rel="stylesheet" href="../../css/datalogging/logging.css">
+
+    <link rel="stylesheet" href="../../css/keyboard.css">
+
+    <script>
+        window.$ = window.jQuery = require('jquery');
+        require('electron-virtual-keyboard/client')(window, jQuery);
+    </script>
+
+    <link href="../../node_modules/electron-virtual-keyboard/virtual-keyboard.css" type="text/css" rel="stylesheet"/>
+
+    <title>New Log</title>
+
+    <style>
+      @font-face {
+          font-family: 'Electrolize';
+          font-style: normal;
+          font-weight: 400;
+          src: local('Electrolize'), local('Electrolize-Regular'), url(font.woff2) format('woff2');
+          unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+        }
+    </style>
+</head>
+    <body>
+        <p id="loader-text-id" class="loader-text"></p>
+        <div id="loader-id" class="loader"></div>
+
+        <div id="content-id" class="content-all">
+            <div id="osk" class="keyboard-modal">
+                <input id="keyboard-input" class="main-keyboard menu-glow" type="text"/>
+                <div id="keyboard-object" class="kb-container"></div>
+            </div>
+
+            <div class="tab">
+                <button class="tablinks" onclick="location.href='../data-logging.html';">Back<button>
+            </div>
+
+            <div id="new-log-name" class="menu-header">
+                ENTER A LOGFILE NAME
+            </div>
+            
+            <div class="log-recording">
+                <p id="recorder-text-id" class="loader-text"></p>
+                <div id="recorder-id" class="loader"></div>
+            </div>
+
+            <div class="menu-option-group">
+                <div class="menu-upper">
+                    <div id="log-start" class="short-menu-option menu-glow" onclick="StartLogging()"><p class="long-item-text">Start</p></div>
+                    <div id="log-stop" class="short-menu-option" onclick="StopLogging()"><p class="long-item-text">Stop</p></div>
+                </div>
+            </div>
+        </div>
+    
+        <script>let _connection = null;</script>
+        <script>require('./new-log-controller.js')</script>
+        <script>require('../../global.js')</script>
+    </body>
+</html>

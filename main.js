@@ -1,11 +1,16 @@
 require('v8-compile-cache');
 
-const {app, BrowserWindow} = require('electron')
+const {app, BrowserWindow} = require('electron');
+const VirtualKeyboard = require('electron-virtual-keyboard');
 
-let mainWindow
+let mainWindow;
+let vkb; 
 
 function createWindow () {
   mainWindow = new BrowserWindow({
+    title: 'AG6_INTERFACE',
+    backgroundColor: '#000000',
+    show: false,
     width: 800, // 800
     height: 480, // 480
     frame: false,
@@ -13,20 +18,27 @@ function createWindow () {
     webPreferences: {
       nodeIntegration: true
     }
-  })
+  });
 
-  mainWindow.loadFile('index.html')
+  mainWindow.loadFile('index.html');
 
   //mainWindow.webContents.on('dom-ready', (event)=> {
   //  let css = '* { cursor: none !important; }';
   //  mainWindow.webContents.insertCSS(css);
-  //);
+  //});
 
-  //mainWindow.webContents.openDevTools()
+  mainWindow.webContents.openDevTools();
 
   mainWindow.on('closed', function () {
     mainWindow = null
-  })
+  });
+
+  mainWindow.on('ready-to-show', function() {
+    mainWindow.show();
+    mainWindow.focus();
+  });
+
+  vkb = new VirtualKeyboard(mainWindow.webContents);
 }
 
 //app.disableHardwareAcceleration();
