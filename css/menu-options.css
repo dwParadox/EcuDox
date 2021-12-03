@@ -27,12 +27,12 @@
 .menu-option {
     float: left;
 
-    background: #080808;
+    background: #000000;
 
     border-style: solid;
     border-radius: 10px;
     border-width: 2px;
-    border-color: #a50000;
+    border-color: #000000;
 
     margin-left: 0px;
     margin-right: 10px;
@@ -43,8 +43,8 @@
     line-break: 0px;
     line-height: 80px;
 
-    min-height: 200px;
-    max-height: 200px;
+    min-height: 220px;
+    max-height: 220px;
 
     min-width: 380px;
     max-width: 380px;
@@ -82,7 +82,7 @@
     border-width: 2px;
     border-color: #101010;
 
-    margin-left: 0px;
+    margin-left: 10px;
     margin-right: 10px;
     margin-top: 10px;
     margin-bottom: 20px;
@@ -109,29 +109,58 @@
 }
 
 .menu-item-text {
-    bottom: 60px;
+    bottom: 30px;
     position: relative;
-    font-size: 38px;
+    font-size: 30px;
 }
 
 .menu-glow {
-    box-shadow: 0 4px 4px rgba(150, 0, 0, 0.5) inset,
-                0 -4px 4px rgba(150, 0, 0, .5) inset;
+    box-shadow: 0 10px 10px rgba(150, 0, 0, 0.5),
+                0 -10px 10px rgba(150, 0, 0, .5);
 
-    animation: animate-menu-glow .7s ease-out infinite;
+    animation: animate-menu-glow 1s ease-out infinite;
 }
 
 @keyframes animate-menu-glow {
     0% {
-        box-shadow: 0 4px 4px rgba(150, 0, 0, .7) inset,
-                    0 -4px 4px rgba(150, 0, 0, .7) inset;
+        box-shadow: 0 10px 10px rgba(150, 0, 0, .7),
+                    0 -10px 10px rgba(150, 0, 0, .7);
+    
     }
     50% {
-        box-shadow: 0 4px 4px rgba(150, 0, 0, .3) inset,
-                    0 -4px 4px rgba(150, 0, 0, .3) inset;
+        box-shadow: 0 4px 4px rgba(150, 0, 0, .1),
+                    0 -4px 4px rgba(150, 0, 0, .1);
+
     }
     100% {
-        box-shadow: 0 4px 4px rgba(150, 0, 0, .7) inset,
-                    0 -4px 4px rgba(150, 0, 0, .7) inset;
+        box-shadow: 0 10px 10px rgba(150, 0, 0, .7),
+                    0 -10px 10px rgba(150, 0, 0, .7);
+
     }
+}
+
+.menu-slider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 50px;
+    color: #fff;
+    font-weight: 500;
+    height: 320px;
+    width: 800px;
+    max-height: 100vh;
+}
+
+.keen-slider__slide {
+    overflow: visible;
+}
+  
+.keen-slider__slide > div {
+    transition: all 0.4s;
+    
+    transform: scale(0.75);
+}
+
+.active > div {
+    transform: scale(1.00);
 }

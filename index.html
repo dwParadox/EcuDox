@@ -6,6 +6,14 @@
         <link rel="stylesheet" href="./css/menu-options.css">
         <link rel="stylesheet" href="./font/font.css">
 
+        <link rel="stylesheet" href="./alert.css" />
+        <script src="./alert.js"></script>
+
+        <link
+            rel="stylesheet"
+            href="./css/keen-slider.css"
+        />
+
         <title>EcuDoxGUI</title>
 
         <style>
@@ -25,53 +33,66 @@
     
         <p id="loader-text-id" class="loader-text"></p>
         <div id="loader-id" class="loader"></div>
+        
+        <div id="content-id">
+            <div class="menu-header">
+                AG6 INTERFACE   
+            </div>
 
-        <div id="content-id" class="content-all">
-            <div class="ScrollStyle">
-                <div class="menu-header">
-                    AG6 INTERFACE
-                </div>
-                <div class="menu-option-group">
-                    <div class="menu-upper">
-                        <div class="menu-option menu-glow" onclick="location.href='./dashboard/main.html';">
-                            <img class="menu-item-logo" src="./img/dashboard.png" />
-                            <p class="menu-item-text">Dashboard</p>
-                        </div>
-
-                        <div class="menu-option menu-glow" onclick="location.href='./map-switching/map-switching.html';">
-                            <img class="menu-item-logo" src="./img/map_switching.png" />
-                            <p class="menu-item-text">Map Switching</p>
-                        </div>
-                    </div>
-
-                    <div class="menu-lower">
-                        <div class="menu-option menu-glow" onclick="location.href='./data-logging/data-logging.html';">
-                            <img class="menu-item-logo" src="./img/data_logging.png" />
-                            <p class="menu-item-text">Data Logging</p>
-                        </div>
-
-                        <div class="menu-option menu-glow" onclick="location.href='./diagnostics/diagnostics.html';">
-                            <img class="menu-item-logo" src="./img/diagnostics.png" />
-                            <p class="menu-item-text">Diagnostics</p>
-                        </div>
+            <div id="my-keen-slider" class="keen-slider">
+                <div class="keen-slider__slide menu-slider">
+                    <div class="menu-option menu-glow" style="animation-delay: 0ms;" onclick="location.href='./dashboard/main.html';">
+                        <img class="menu-item-logo" src="./img/dashboard.png" />
+                        <p class="menu-item-text">Dashboard</p>
                     </div>
                 </div>
-
-                <div class="menu-option-group">
-                    <div class="menu-upper">
-                        <div class="menu-option menu-glow" onclick="location.href='./tuning/tuning.html';">
-                            <img class="menu-item-logo" src="./img/tuning.png" />
-                            <p class="menu-item-text">Tuning</p>
-                        </div>
-
-                        <div class="menu-option menu-glow" onclick="location.href='./settings/settings.html';">
-                            <img class="menu-item-logo" src="./img/crow_nobg.png" />
-                            <p class="menu-item-text">AG6 Settings</p>
-                        </div>
+                <div class="keen-slider__slide menu-slider">
+                    <div class="menu-option menu-glow" style="animation-delay: 200ms;" onclick="location.href='./map-switching/map-switching.html';">
+                        <img class="menu-item-logo" src="./img/map_switching.png" />
+                        <p class="menu-item-text">Map Switching</p>
+                    </div>
+                </div>
+                <div class="keen-slider__slide menu-slider">
+                    <div class="menu-option menu-glow" style="animation-delay: 400ms;" onclick="location.href='./data-logging/data-logging.html';">
+                        <img class="menu-item-logo" src="./img/data_logging.png" />
+                        <p class="menu-item-text">Data Logging</p>
+                    </div>
+                </div>
+                <div class="keen-slider__slide menu-slider">
+                    <div class="menu-option menu-glow" style="animation-delay: 600ms;" onclick="location.href='./diagnostics/diagnostics.html';">
+                        <img class="menu-item-logo" src="./img/diagnostics.png" />
+                        <p class="menu-item-text">Diagnostics</p>
+                    </div>
+                </div>
+                <div class="keen-slider__slide menu-slider">
+                    <div class="menu-option menu-glow" style="animation-delay: 800ms;" onclick="location.href='./tuning/tuning.html';">
+                        <img class="menu-item-logo" src="./img/tuning.png" />
+                        <p class="menu-item-text">Tuning</p>
                     </div>
                 </div>
             </div>
+    
+            <script src="./js/keen-slider.js"></script>
         </div>
+
+        <script>
+            function updateActive(s) {
+                s.slides.forEach((element) => {
+                element.classList.remove("active");
+                });
+                s.slides[s.track.details.rel].classList.add("active");
+            }
+            var slider = new KeenSlider("#my-keen-slider", {
+                loop: true,
+                slides: {
+                    origin: "center",
+                    perView: 2,
+                    spacing: 0,
+                },
+                created: updateActive,
+                slideChanged: updateActive
+            });
+        </script>
 
         <script>let _connection = null;</script>
         <script>require('./index-controller.js')</script>

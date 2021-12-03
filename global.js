@@ -90,7 +90,12 @@ function setupConnectionToRestartOnConnectionLost() {
     };
 
     _connection.on('APIException', data => {
-        alert(data);
+        cuteAlert({
+            type: "error",
+            title: "APIException:",
+            message: data,
+            buttonText: "OK"
+            });
     });
 
     _connection.on('InitStarted', data => {
@@ -126,16 +131,36 @@ function setupConnectionToRestartOnConnectionLost() {
     });
 
     _connection.on('VehicleInfoMessage', data => {
-        alert(data);
+        cuteToast({
+            type: "info", // or 'info', 'error', 'warning'
+            message: data,
+            timer: 5000
+          });
     });
 
     _connection.on('LogFileNameRequest', logid => {
-        alert('Enter a name for LogFile: \"' + logid + '\"')
+        cuteAlert({
+            type: "info",
+            title: "Name required for LogFile:",
+            message: logid,
+            buttonText: "OK"
+            }).then(() => {
+                inputNode.focus();
+              });
+
         oskPrompt('LogFileNameResponse');
     });
 
     _connection.on('MapFileNameRequest', mapid => {
-        alert('Enter a name for MapFile: \"' + mapid + '\"')
+        cuteAlert({
+            type: "info",
+            title: "Name required for MapFile:",
+            message: mapid,
+            buttonText: "OK"
+            }).then(() => {
+                inputNode.focus();
+              });
+
         oskPrompt('MapFileNameResponse');
     });
 
