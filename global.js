@@ -118,6 +118,12 @@ function setupConnectionToRestartOnConnectionLost() {
         if (typeof window.StartLogging === 'function') {
             oskPrompt('ReturnNewLogFileName');
         }
+
+        if (typeof window.AddCsv === 'function') {
+            var urlParams = new URLSearchParams(window.location.search);
+
+            _connection.send('GetLogCsv', urlParams.get('logid'), data => { AddCsv(data); });
+        }
     });
 
     _connection.on('NewLogFileName', data => {

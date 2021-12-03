@@ -141,6 +141,11 @@ namespace EcuDox
                     _js.Send("NewLogFileName", name);
                 });
 
+                _js.On<string, string>("GetLogCsv", logId =>
+                {
+                    return Logging.GetLogData(logId);
+                });
+
                 while (true)
                 {
                     //string dataJson = API.QueryData();

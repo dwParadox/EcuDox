@@ -1,6 +1,7 @@
 let availableLogs = null;
 
 window.OpenLog = function OpenLog(logid) {
+    location.href='./view-log/view-log.html?logid=' + logid;
 }
 
 window.NewLog = function NewLog() {

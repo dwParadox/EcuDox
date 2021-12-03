@@ -23,6 +23,18 @@ namespace EcuDox
             this._handler.RegisterQueueEvents();
         }
 
+        public string GetLogData(string id)
+        {
+            string filePath = "./AG6_DATA/Logs/" + id + ".csv";
+            if (File.Exists(filePath))
+                return File.ReadAllText(filePath);
+
+            else
+                new AG6Exception(_js, "LogFile(" + id + ") could not be loaded.");
+
+            return "";
+        }
+
         public void CreateNewLogFile(string id, string name)
         {
             if (!File.Exists("./AG6_DATA/LogFiles.json"))

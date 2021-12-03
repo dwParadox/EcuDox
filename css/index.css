@@ -151,6 +151,12 @@ body {
 	float: left;
 }
 
+.highcharts-figure .log-container {
+	width: 780px;
+	height: 800px;
+	float: left;
+}
+
 .highcharts-figure, .highcharts-data-table table {
 	width: 800px;
 	margin: 0 auto;
